@@ -24,7 +24,7 @@ public class Metronome : MonoBehaviour
     // 在编辑器中可编辑的 BPM 属性
     [SerializeField]
     public float bpm = 120f;
-
+    public float preBeatEventTime = 0.05f;
     // 每拍时间
     private float beatInterval;
     private float halfBeatInterval;
@@ -32,6 +32,7 @@ public class Metronome : MonoBehaviour
 
     // 事件
     public static event Action<bool> OnBeatEvent;
+    public static event Action PreBeatEvent;
 
     // 当前时间
     private float timer = 0f;
@@ -56,6 +57,10 @@ public class Metronome : MonoBehaviour
     private void Update()
     {
         timer += Time.deltaTime;
+        if (isFullBeat && timer + preBeatEventTime >= halfBeatInterval )
+        {
+            PreBeatEvent?.Invoke();
+        }
 
         if (timer >= halfBeatInterval)
         {
