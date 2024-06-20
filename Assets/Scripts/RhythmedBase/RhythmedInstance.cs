@@ -19,6 +19,7 @@ public class RhythmedInstance : MonoBehaviour, IRhythmed
     void Update()
     {
         
+        
     }
 
     private void OnEnable()
@@ -45,7 +46,7 @@ public class RhythmedInstance : MonoBehaviour, IRhythmed
 
     public void OnHalfBeat()
     {
-        //Debug.Log("Half Beat");
+        Debug.Log("Half Beat");
     }
 
     public void OnBeat()
@@ -62,8 +63,8 @@ public class RhythmedInstance : MonoBehaviour, IRhythmed
     private IEnumerator MoveToPosition()
     {
         float bpm = Metronome.GetBPM();
-        float beatDuration = 60f / bpm; // 每拍的时间
-        float halfBeatDuration = beatDuration / 2f; // 每半拍的时间
+        float beatDuration = 60f / bpm; // 每锟侥碉拷时锟斤拷
+        float halfBeatDuration = beatDuration / 2f; // 每锟斤拷锟侥碉拷时锟斤拷
 
         float elapsedTime = 0f;
 
