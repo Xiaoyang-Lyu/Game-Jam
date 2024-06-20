@@ -16,17 +16,10 @@ public class BeatPlayer : MonoBehaviour, IRhythmed
     
     void Start()
     {
-        halfBeatEffect = GetComponent<SoundEffect>();
-        if (halfBeatEffect == null){
-            halfBeatEffect = gameObject.AddComponent<SoundEffect>();
-        }
+        halfBeatEffect = gameObject.AddComponent<SoundEffect>();
         halfBeatEffect.soundSource = halfBeatSound;
 
-
-        fullBeatEffect = GetComponent<SoundEffect>();
-        if (fullBeatEffect == null){
-            fullBeatEffect = gameObject.AddComponent<SoundEffect>();
-        }
+        fullBeatEffect = gameObject.AddComponent<SoundEffect>();
         fullBeatEffect.soundSource = fullBeatSound;
         OnEnable();
 
