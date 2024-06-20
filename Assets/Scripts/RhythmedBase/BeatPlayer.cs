@@ -1,13 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using Assets.Scripts;
-using Unity.Mathematics;
 using UnityEngine;
 
 public class BeatPlayer : MonoBehaviour, IRhythmed
 {
     // Start is called before the first frame update
-    private SoundEffect beatEffect;
+    private SoundEffect halfBeatEffect;
+    private SoundEffect fullBeatEffect;
     public AudioClip halfBeatSound;
     public AudioClip fullBeatSound;
 
@@ -16,13 +16,18 @@ public class BeatPlayer : MonoBehaviour, IRhythmed
     
     void Start()
     {
-        beatEffect = GetComponent<SoundEffect>();
-        if (beatEffect == null){
-            beatEffect = gameObject.AddComponent<SoundEffect>();
+        halfBeatEffect = GetComponent<SoundEffect>();
+        if (halfBeatEffect == null){
+            halfBeatEffect = gameObject.AddComponent<SoundEffect>();
         }
-        beatEffect.soundSource = halfBeatSound;
+        halfBeatEffect.soundSource = halfBeatSound;
 
 
+        fullBeatEffect = GetComponent<SoundEffect>();
+        if (fullBeatEffect == null){
+            fullBeatEffect = gameObject.AddComponent<SoundEffect>();
+        }
+        fullBeatEffect.soundSource = fullBeatSound;
         OnEnable();
 
         
@@ -57,14 +62,12 @@ public class BeatPlayer : MonoBehaviour, IRhythmed
 
     public void OnHalfBeat()
     {
-        beatEffect.soundSource = halfBeatSound;
-        beatEffect.PlaySoundEffect();
+        halfBeatEffect.PlaySoundEffect();
     }
 
     public void OnBeat()
     {
-        beatEffect.soundSource = fullBeatSound;
-        beatEffect.PlaySoundEffect();
+        fullBeatEffect.PlaySoundEffect();
     }
     
 }
