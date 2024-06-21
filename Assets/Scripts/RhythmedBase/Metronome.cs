@@ -29,6 +29,11 @@ public class Metronome : MonoBehaviour
     private float beatInterval;
     private float halfBeatInterval;
     private bool isFullBeat;
+    private bool preEventPlayed;
+
+    //
+    private float nextFullBeatTime; // 下一个全拍时间
+    private float nextHalfBeatTime; // 下一个半拍时间
 
     // 事件
     public static event Action<bool> OnBeatEvent;
@@ -36,6 +41,10 @@ public class Metronome : MonoBehaviour
 
     // 当前时间
     private float timer = 0f;
+
+    //BGM
+    private AudioSource audioSource;
+    public List<AudioClip> BGMs;
 
     private void Awake()
     {
@@ -49,26 +58,61 @@ public class Metronome : MonoBehaviour
             Destroy(gameObject);
         }
 
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
+
         // 根据 BPM 计算每拍的时间
         UpdateIntervals();
         isFullBeat = false;
+        preEventPlayed = false;
+    }
+
+    private void Start()
+    {
+        SetBGMOnce(0);
     }
 
     private void Update()
     {
-        timer += Time.deltaTime;
-        if (isFullBeat && timer + preBeatEventTime >= halfBeatInterval )
+        timer = audioSource.time;
+        if (timer >= nextFullBeatTime)
+        {
+            OnBeatEvent?.Invoke(true);
+            Debug.Log(audioSource.time % beatInterval);
+            nextFullBeatTime += beatInterval;
+            preEventPlayed = false;
+            //nextHalfBeatTime = nextFullBeatTime - halfBeatInterval;
+        }
+        else if (timer >= nextHalfBeatTime)
+        {
+            OnBeatEvent?.Invoke(false);
+            nextHalfBeatTime += beatInterval;
+        }
+        
+        if (timer + preBeatEventTime >= nextFullBeatTime && !preEventPlayed )
         {
             PreBeatEvent?.Invoke();
+            preEventPlayed = true;
         }
 
+        /*
         if (timer >= halfBeatInterval)
         {
             //bool isFullBeat = (Mathf.FloorToInt(timer / halfBeatInterval) % 2 == 0);
+            //Debug.Log(isFullBeat);
             OnBeatEvent?.Invoke(isFullBeat);
+            if (!isFullBeat)
+            {
+                preEventPlayed = false;
+                Debug.Log(audioSource.time);
+                Debug.Log(audioSource.time % halfBeatInterval);
+            }
             isFullBeat = !isFullBeat;
             timer -= halfBeatInterval;
-        }
+        }*/
     }
 
     private void UpdateIntervals()
@@ -84,12 +128,12 @@ public class Metronome : MonoBehaviour
 
     public float TimeToNextHalfBeat()
     {
-        return halfBeatInterval - (timer % halfBeatInterval);
+        return nextHalfBeatTime - timer;
     }
 
     public float TimeToNextBeat()
     {
-        return beatInterval - (timer % beatInterval);
+        return nextFullBeatTime - timer;
     }
 
     private void OnDestroy()
@@ -105,5 +149,14 @@ public class Metronome : MonoBehaviour
     private void OnValidate()
     {
         UpdateIntervals();
+    }
+
+    private void SetBGMOnce(int index)
+    {
+        audioSource.clip = BGMs[index];
+        audioSource.Play();
+        timer = 0.0f;
+        nextFullBeatTime = beatInterval;
+        nextHalfBeatTime = halfBeatInterval;
     }
 }

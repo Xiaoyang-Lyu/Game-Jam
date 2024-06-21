@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RhythmedInstance : MonoBehaviour, IRhythmed
+public class RhythmedInstance : MonoBehaviour, I_Rhythmed
 {
     public Vector3 startPosition;
     public Vector3 endPosition;

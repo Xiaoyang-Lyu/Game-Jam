@@ -1,38 +1,23 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Assets.Scripts;
 using UnityEngine;
 
-public class BeatPlayer : MonoBehaviour, IRhythmed
+public class BeatPlayer : MonoBehaviour, I_Rhythmed
 {
-    // Start is called before the first frame update
-    //private SoundEffect halfBeatEffect;
-    //private SoundEffect fullBeatEffect;
-    private AudioSource halfBeatEffect;
-    private AudioSource fullBeatEffect;
     public bool playHalfBeatSound;
-    public AudioClip halfBeatSound;
-    public AudioClip fullBeatSound;
-    
+
+    private AudioSource audioSource;
+
+    public List<AudioClip> soundClips;
+
     void Start()
     {
-        /*
-        halfBeatEffect = gameObject.AddComponent<SoundEffect>();
-        halfBeatEffect.soundSource = halfBeatSound;
-
-        fullBeatEffect = gameObject.AddComponent<SoundEffect>();
-        fullBeatEffect.soundSource = fullBeatSound;
-        OnEnable();*/
-        halfBeatEffect = GetComponent<AudioSource>();
-        if (halfBeatEffect == null)
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
         {
-            halfBeatEffect = gameObject.AddComponent<AudioSource>();
-        }
-
-        fullBeatEffect = GetComponent<AudioSource>();
-        if (fullBeatEffect == null)
-        {
-            fullBeatEffect = gameObject.AddComponent<AudioSource>();
+            audioSource = gameObject.AddComponent<AudioSource>();
         }
     }
 
@@ -43,12 +28,12 @@ public class BeatPlayer : MonoBehaviour, IRhythmed
     }
     private void OnEnable()
     {
-        Metronome.PreBeatEvent += OnBeat;
+        Metronome.PreBeatEvent += OnPreBeat;
     }
 
     private void OnDisable()
     {
-        Metronome.PreBeatEvent -= OnBeat;
+        Metronome.PreBeatEvent -= OnPreBeat;
     }
 
     private void HandleBeatEvent(bool isFullBeat)
@@ -66,17 +51,25 @@ public class BeatPlayer : MonoBehaviour, IRhythmed
 
     public void OnHalfBeat()
     {
-        if (playHalfBeatSound)
-        {
-            halfBeatEffect.PlayOneShot(halfBeatSound);
-        }
-        //halfBeatEffect.PlaySoundEffect();
+
     }
 
     public void OnBeat()
     {
-        //fullBeatEffect.PlaySoundEffect();
-        fullBeatEffect.PlayOneShot(fullBeatSound);
+        
     }
-    
+
+    public void OnPreBeat()
+    {
+        PlayClip(0);
+    }
+
+    public void PlayClip(int index)
+    {
+        audioSource.PlayOneShot(soundClips[index]);
+        /*
+        audioSource.clip = audioClips[index];
+        audioSource.Play();*/
+    }
+
 }

@@ -397,8 +397,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 039cbc690bd122541a3fdfbaba25e612, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bpm: 120
+  bpm: 171
   preBeatEventTime: 0.05
+  BGMs:
+  - {fileID: 8300000, guid: dd9cd2a41add0d948ad7719664ccadee, type: 3}
 --- !u!1 &681314181
 GameObject:
   m_ObjectHideFlags: 0
@@ -444,10 +446,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   feedbackText: {fileID: 108010987}
-  goodStart: -0.2
-  perfectStart: -0.1
-  perfectEnd: 0.1
-  goodEnd: 0.2
+  goodStart: -0.1
+  perfectStart: -0.05
+  perfectEnd: 0.05
+  goodEnd: 0.1
 --- !u!1 &705930130
 GameObject:
   m_ObjectHideFlags: 0
@@ -571,14 +573,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1031734226}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a7d071e43e12745ce8bc21c38cbb686b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   playHalfBeatSound: 0
-  halfBeatSound: {fileID: 0}
-  fullBeatSound: {fileID: 8300000, guid: 7ce1798b2ec354ea2a5f6850cd621009, type: 3}
+  soundClips:
+  - {fileID: 8300000, guid: 7ce1798b2ec354ea2a5f6850cd621009, type: 3}
 --- !u!4 &1031734228
 Transform:
   m_ObjectHideFlags: 0
