@@ -25,13 +25,13 @@ public class RhythmedInstance : MonoBehaviour, IRhythmed
     private void OnEnable()
     {
         //Metronome.OnBeatEvent += HandleBeatEvent;
-        Metronome.PreBeatEvent += OnBeat;
+        Metronome.PreBeatEvent += HandleBeatEvent;
     }
 
     private void OnDisable()
     {
         //Metronome.OnBeatEvent -= HandleBeatEvent;
-        Metronome.PreBeatEvent -= OnBeat;
+        Metronome.PreBeatEvent -= HandleBeatEvent;
     }
 
     private void HandleBeatEvent(bool isFullBeat)

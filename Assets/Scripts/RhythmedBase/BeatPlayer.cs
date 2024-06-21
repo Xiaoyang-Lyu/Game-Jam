@@ -34,6 +34,7 @@ public class BeatPlayer : MonoBehaviour, IRhythmed
         {
             fullBeatEffect = gameObject.AddComponent<AudioSource>();
         }
+        OnEnable();
     }
 
     // Update is called once per frame
@@ -43,12 +44,12 @@ public class BeatPlayer : MonoBehaviour, IRhythmed
     }
     private void OnEnable()
     {
-        Metronome.PreBeatEvent += OnBeat;
+        Metronome.PreBeatEvent += HandleBeatEvent;
     }
 
     private void OnDisable()
     {
-        Metronome.PreBeatEvent -= OnBeat;
+        Metronome.PreBeatEvent -= HandleBeatEvent;
     }
 
     private void HandleBeatEvent(bool isFullBeat)

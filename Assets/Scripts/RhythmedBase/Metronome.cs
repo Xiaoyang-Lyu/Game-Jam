@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Metronome : MonoBehaviour
 {
-    // µ¥ÀýÊµÀý
+    // ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½
     private static Metronome _instance;
     public static Metronome Instance
     {
@@ -21,20 +21,23 @@ public class Metronome : MonoBehaviour
         }
     }
 
-    // ÔÚ±à¼­Æ÷ÖÐ¿É±à¼­µÄ BPM ÊôÐÔ
+    // ï¿½Ú±à¼­ï¿½ï¿½ï¿½Ð¿É±à¼­ï¿½ï¿½ BPM ï¿½ï¿½ï¿½ï¿½
     [SerializeField]
-    public float bpm = 120f;
+    private float bpm = 120f;
     public float preBeatEventTime = 0.05f;
-    // Ã¿ÅÄÊ±¼ä
+    // Ã¿ï¿½ï¿½Ê±ï¿½ï¿½
+    [SerializeField]
     private float beatInterval;
+    [SerializeField]
     private float halfBeatInterval;
     private bool isFullBeat;
 
-    // ÊÂ¼þ
+    // ï¿½Â¼ï¿½
     public static event Action<bool> OnBeatEvent;
-    public static event Action PreBeatEvent;
+    public static event Action<bool> PreBeatEvent;
 
-    // µ±Ç°Ê±¼ä
+    // ï¿½ï¿½Ç°Ê±ï¿½ï¿½
+    [SerializeField]
     private float timer = 0f;
 
     private void Awake()
@@ -49,7 +52,7 @@ public class Metronome : MonoBehaviour
             Destroy(gameObject);
         }
 
-        // ¸ù¾Ý BPM ¼ÆËãÃ¿ÅÄµÄÊ±¼ä
+        // ï¿½ï¿½ï¿½ï¿½ BPM ï¿½ï¿½ï¿½ï¿½Ã¿ï¿½Äµï¿½Ê±ï¿½ï¿½
         UpdateIntervals();
         isFullBeat = false;
     }
@@ -59,7 +62,8 @@ public class Metronome : MonoBehaviour
         timer += Time.deltaTime;
         if (isFullBeat && timer + preBeatEventTime >= halfBeatInterval )
         {
-            PreBeatEvent?.Invoke();
+            PreBeatEvent?.Invoke(isFullBeat);
+            Debug.Log("p");
         }
 
         if (timer >= halfBeatInterval)
@@ -68,6 +72,7 @@ public class Metronome : MonoBehaviour
             OnBeatEvent?.Invoke(isFullBeat);
             isFullBeat = !isFullBeat;
             timer -= halfBeatInterval;
+            Debug.Log("h");
         }
     }
 
