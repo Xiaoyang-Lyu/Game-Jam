@@ -43,6 +43,8 @@ public class Metronome : MonoBehaviour
     private float timer = 0f;
 
     //BGM
+    public bool StartWithBGM = true;
+    private bool playingBGM = false;
     private AudioSource audioSource;
     public List<AudioClip> BGMs;
 
@@ -72,31 +74,35 @@ public class Metronome : MonoBehaviour
 
     private void Start()
     {
-        SetBGMOnce(0);
+        if(StartWithBGM)    SetBGMOnce(0);
     }
 
     private void Update()
     {
-        timer = audioSource.time;
-        if (timer >= nextFullBeatTime)
+        if (playingBGM)
         {
-            OnBeatEvent?.Invoke(true);
-            Debug.Log(audioSource.time % beatInterval);
-            nextFullBeatTime += beatInterval;
-            preEventPlayed = false;
-            //nextHalfBeatTime = nextFullBeatTime - halfBeatInterval;
-        }
-        else if (timer >= nextHalfBeatTime)
-        {
-            OnBeatEvent?.Invoke(false);
-            nextHalfBeatTime += beatInterval;
+            timer = audioSource.time;
+            if (timer >= nextFullBeatTime)
+            {
+                OnBeatEvent?.Invoke(true);
+                //Debug.Log(audioSource.time % beatInterval);
+                nextFullBeatTime += beatInterval;
+                preEventPlayed = false;
+                //nextHalfBeatTime = nextFullBeatTime - halfBeatInterval;
+            }
+            else if (timer >= nextHalfBeatTime)
+            {
+                OnBeatEvent?.Invoke(false);
+                nextHalfBeatTime += beatInterval;
+            }
+
+            if (timer + preBeatEventTime >= nextFullBeatTime && !preEventPlayed)
+            {
+                PreBeatEvent?.Invoke();
+                preEventPlayed = true;
+            }
         }
         
-        if (timer + preBeatEventTime >= nextFullBeatTime && !preEventPlayed )
-        {
-            PreBeatEvent?.Invoke();
-            preEventPlayed = true;
-        }
 
         /*
         if (timer >= halfBeatInterval)
@@ -156,7 +162,8 @@ public class Metronome : MonoBehaviour
         audioSource.clip = BGMs[index];
         audioSource.Play();
         timer = 0.0f;
-        nextFullBeatTime = beatInterval;
-        nextHalfBeatTime = halfBeatInterval;
+        nextFullBeatTime = halfBeatInterval;
+        nextHalfBeatTime = beatInterval;
+        playingBGM = true;
     }
 }

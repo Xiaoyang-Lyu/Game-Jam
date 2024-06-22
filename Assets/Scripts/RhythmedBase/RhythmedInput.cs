@@ -33,13 +33,13 @@ public class RhythmedInput : MonoBehaviour
 
     private string GetFeedback(float timeToNextBeat, float interval)
     {
-        float timeFromLastBeat = interval - timeToNextBeat; // < 0
+        float timeFromLastBeat = interval - timeToNextBeat ; // > 0
 
-        if (IsWithinRange(timeFromLastBeat, perfectStart, perfectEnd) || IsWithinRange(timeToNextBeat, perfectStart, perfectEnd))
+        if (IsWithinRange(timeFromLastBeat, perfectStart, perfectEnd) || IsWithinRange(-timeToNextBeat, perfectStart, perfectEnd))
         {
             return "Perfect!";
         }
-        else if (IsWithinRange(timeFromLastBeat, goodStart, goodEnd) || IsWithinRange(timeToNextBeat, goodStart, goodEnd))
+        else if (IsWithinRange(timeFromLastBeat, goodStart, goodEnd) || IsWithinRange(-timeToNextBeat, goodStart, goodEnd))
         {
             return "Good!";
         }

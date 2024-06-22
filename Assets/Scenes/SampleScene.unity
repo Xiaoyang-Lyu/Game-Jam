@@ -397,10 +397,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 039cbc690bd122541a3fdfbaba25e612, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bpm: 171
+  bpm: 136
   preBeatEventTime: 0.05
+  StartWithBGM: 1
   BGMs:
-  - {fileID: 8300000, guid: dd9cd2a41add0d948ad7719664ccadee, type: 3}
+  - {fileID: 8300000, guid: 5d0649e92d000104fb79a200652840ce, type: 3}
 --- !u!1 &681314181
 GameObject:
   m_ObjectHideFlags: 0
@@ -446,10 +447,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   feedbackText: {fileID: 108010987}
-  goodStart: -0.1
-  perfectStart: -0.05
-  perfectEnd: 0.05
-  goodEnd: 0.1
+  goodStart: -0.15
+  perfectStart: -0.075
+  perfectEnd: 0.025
+  goodEnd: 0.5
 --- !u!1 &705930130
 GameObject:
   m_ObjectHideFlags: 0
