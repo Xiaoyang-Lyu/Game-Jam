@@ -450,7 +450,7 @@ MonoBehaviour:
   goodStart: -0.15
   perfectStart: -0.075
   perfectEnd: 0.025
-  goodEnd: 0.5
+  goodEnd: 0.05
 --- !u!1 &705930130
 GameObject:
   m_ObjectHideFlags: 0
