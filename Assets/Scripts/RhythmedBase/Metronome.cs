@@ -21,14 +21,12 @@ public class Metronome : MonoBehaviour
         }
     }
 
-    // 在编辑器中可编辑的 BPM 属性
-    [SerializeField]
-    public float bpm = 120f;
+
     public float preBeatEventTime = 0.05f;
     // 每拍时间
+    private float bpm = 120f;
     private float beatInterval;
     private float halfBeatInterval;
-    private bool isFullBeat;
     private bool preEventPlayed;
 
     //
@@ -43,10 +41,12 @@ public class Metronome : MonoBehaviour
     private float timer = 0f;
 
     //BGM
+    public int StartBGMIndex = 0;
     public bool StartWithBGM = true;
     private bool playingBGM = false;
     private AudioSource audioSource;
     public List<AudioClip> BGMs;
+    public List<float> bpms;
 
     private void Awake()
     {
@@ -66,15 +66,12 @@ public class Metronome : MonoBehaviour
             audioSource = gameObject.AddComponent<AudioSource>();
         }
 
-        // 根据 BPM 计算每拍的时间
-        UpdateIntervals();
-        isFullBeat = false;
         preEventPlayed = false;
     }
 
     private void Start()
     {
-        if(StartWithBGM)    SetBGMOnce(0);
+        if(StartWithBGM)    SetBGMOnce(StartBGMIndex);
     }
 
     private void Update()
@@ -121,8 +118,9 @@ public class Metronome : MonoBehaviour
         }*/
     }
 
-    private void UpdateIntervals()
+    private void UpdateIntervals(float newBpm)
     {
+        bpm = newBpm;
         beatInterval = 60f / bpm;
         halfBeatInterval = beatInterval / 2f;
     }
@@ -154,7 +152,7 @@ public class Metronome : MonoBehaviour
 
     private void OnValidate()
     {
-        UpdateIntervals();
+
     }
 
     private void SetBGMOnce(int index)
@@ -162,8 +160,11 @@ public class Metronome : MonoBehaviour
         audioSource.clip = BGMs[index];
         audioSource.Play();
         timer = 0.0f;
+        UpdateIntervals(bpms[index]);
         nextFullBeatTime = halfBeatInterval;
         nextHalfBeatTime = beatInterval;
+        //nextFullBeatTime = beatInterval;
+        //nextHalfBeatTime = halfBeatInterval;
         playingBGM = true;
     }
 }
