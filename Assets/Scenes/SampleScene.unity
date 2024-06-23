@@ -398,7 +398,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   preBeatEventTime: 0.05
-  StartBGMIndex: 3
+  StartBGMIndex: 1
   StartWithBGM: 1
   BGMs:
   - {fileID: 8300000, guid: bb8c727805b6148f59f3032058254f8c, type: 3}
@@ -489,8 +489,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abe353eab76767d49a3d655cbd164b13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startPosition: {x: -8.6, y: 2.3, z: 0}
-  endPosition: {x: -8.6, y: 3.4, z: 0}
+  startPosition: {x: -7.8, y: 3.2, z: 0}
+  endPosition: {x: -7.8, y: 4, z: 0}
 --- !u!212 &705930132
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -551,7 +551,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 705930130}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -8.6, y: 2.3, z: 0}
+  m_LocalPosition: {x: -7.8, y: 4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
